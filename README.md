@@ -183,8 +183,8 @@ Authorization: Bearer <token>
 
 หลังทดสอบโปรแกรมจริง ให้บันทึกภาพหน้าจอ 2 ภาพลงในโฟลเดอร์ `docs/` แล้วตั้งชื่อดังนี้:
 
-1. `docs/debug-register.png` — ภาพการสมัครสมาชิกสำเร็จ หรือข้อมูลผู้ใช้ที่ถูกสร้างใน MongoDB
-2. `docs/debug-notes.png` — ภาพการสร้าง/แสดงโน้ต และหลักฐานข้อมูลใน MongoDB หรือผลตอบกลับจาก API
+1. `docs/debug-register.jpg` `docs/debug-register1.jpg` — ภาพการสมัครสมาชิกสำเร็จ หรือข้อมูลผู้ใช้ที่ถูกสร้างใน MongoDB
+2. `docs/debug-notes.jpg` `docs/debug-notes1.jpg` — ภาพการสร้าง/แสดงโน้ต และหลักฐานข้อมูลใน MongoDB หรือผลตอบกลับจาก API
 
 
 
