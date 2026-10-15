@@ -190,8 +190,9 @@ Authorization: Bearer <token>
 
 
 ### ภาพที่ 1: ทดสอบสมัครสมาชิก
-![docs/debug-register.png](docs/debug-register.png)
+![Register debugging evidence](docs/debug-register.png)
+![Register debugging evidence](docs/debug-register1.png)
 ### ภาพที่ 2: ทดสอบบันทึกโน้ต
-![Notes debugging evidence](docs/debug-notes.png)(docs/debug-notes1.png)
-```
+![Notes debugging evidence](docs/debug-notes.png)
+![Notes debugging evidence](docs/debug-notes1.png)
 
