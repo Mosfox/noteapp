@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notes App — ระบบจดบันทึกส่วนตัว</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="auth-view" class="auth-layout">
+    <section class="auth-card">
+      <div class="brand-mark">N</div>
+      <h1>Notes App</h1>
+      <p class="muted">ระบบจดบันทึกส่วนตัว</p>
+      <p id="auth-msg" class="message" hidden></p>
+      <div class="auth-columns">
+        <form id="login-form" class="form-panel">
+          <h2>เข้าสู่ระบบ</h2>
+          <label>Username<input name="username" required minlength="3" autocomplete="username"></label>
+          <label>รหัสผ่าน<input name="password" type="password" required autocomplete="current-password"></label>
+          <button class="primary" type="submit">เข้าสู่ระบบ</button>
+        </form>
+        <form id="register-form" class="form-panel">
+          <h2>สมัครสมาชิก</h2>
+          <label>Username<input name="username" required minlength="3" maxlength="30" pattern="[A-Za-z0-9_]+" autocomplete="username"></label>
+          <label>ชื่อที่แสดง<input name="name" required minlength="2" maxlength="80" autocomplete="name"></label>
+          <label>อีเมล<input name="email" type="email" required autocomplete="email"></label>
+          <label>รหัสผ่าน (อย่างน้อย 8 ตัว)<input name="password" type="password" required minlength="8" autocomplete="new-password"></label>
+          <button class="primary" type="submit">สร้างบัญชี</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <main id="app-view" hidden>
+    <header class="topbar">
+      <a class="brand" href="#"> <span class="brand-mark small">N</span> Notes App</a>
+      <div class="account"><span id="who"></span><button id="logout" class="secondary">ออกจากระบบ</button></div>
+    </header>
+    <section class="content">
+      <div class="welcome">
+        <div><p class="eyebrow">พื้นที่ส่วนตัวของคุณ</p><h1>บันทึกของฉัน</h1><p class="muted">เก็บความคิดและสิ่งที่ต้องทำไว้ในที่เดียว</p></div>
+      </div>
+      <label class="search-wrap"><span aria-hidden="true">⌕</span><input id="search" placeholder="ค้นหาโน้ต..." aria-label="ค้นหาโน้ต"></label>
+      <nav id="chips" class="chips" aria-label="หมวดหมู่"></nav>
+      <p id="error" class="message" hidden></p>
+      <section id="pinned-wrap" hidden><h2 class="section-title">★ โน้ตที่ปักหมุด</h2><div id="pinned" class="notes-grid"></div></section>
+      <h2 id="others-label" class="section-title" hidden>โน้ตทั้งหมด</h2>
+      <div id="notes" class="notes-grid"></div>
+      <p id="empty" class="empty-state" hidden></p>
+      <section id="admin-section" class="admin-section" hidden>
+        <h2>จัดการสมาชิก (ผู้ดูแลระบบ)</h2>
+        <div class="table-scroll"><table><thead><tr><th>Username</th><th>ชื่อ</th><th>อีเมล</th><th>Role</th><th>จัดการ</th></tr></thead><tbody id="user-table"></tbody></table></div>
+      </section>
+    </section>
+    <button id="fab" class="fab" aria-label="สร้างโน้ตใหม่" title="สร้างโน้ตใหม่">+</button>
+  </main>
+
+  <section id="editor" class="modal" hidden aria-label="แก้ไขโน้ต">
+    <div class="modal-panel">
+      <header class="editor-header">
+        <button id="ed-close" class="icon-btn" aria-label="ปิด">✕</button>
+        <span class="muted">แก้ไขบันทึก</span>
+        <div class="editor-actions"><button id="ed-pin" class="secondary" type="button">ปักหมุด</button><button id="ed-delete" class="danger" type="button" hidden>ลบ</button><button id="ed-save" class="primary" type="button">บันทึก</button></div>
+      </header>
+      <p id="ed-error" class="message" hidden></p>
+      <label class="sr-only" for="ed-title">หัวข้อ</label>
+      <input id="ed-title" class="title-input" placeholder="หัวข้อ" maxlength="120">
+      <label class="category-label">หมวดหมู่<input id="ed-category" list="cat-list" maxlength="40" placeholder="เช่น เรียน งาน ส่วนตัว"></label>
+      <datalist id="cat-list"></datalist>
+      <div class="toolbar" aria-label="จัดรูปแบบข้อความ">
+        <button type="button" data-cmd="bold"><b>B</b></button><button type="button" data-cmd="italic"><i>I</i></button><button type="button" data-cmd="underline"><u>U</u></button><button type="button" data-cmd="insertUnorderedList">• รายการ</button><button type="button" data-cmd="formatBlock" data-val="h2">หัวข้อย่อย</button>
+      </div>
+      <div id="ed-body" class="editor-body" contenteditable="true" data-placeholder="เริ่มเขียนบันทึกของคุณ..." aria-label="ข้อความโน้ต"></div>
+      <section class="editor-section"><h3>รูปภาพ</h3><label class="file-button">＋ เพิ่มรูปภาพ<input id="ed-file" type="file" accept="image/*" multiple></label><p class="hint">แนบได้สูงสุด 6 รูป ระบบจะย่อรูปก่อนบันทึก</p><div id="ed-images" class="thumbs"></div></section>
+      <section class="editor-section"><h3>Checklist</h3><div class="add-check"><input id="ck-new" placeholder="เพิ่มสิ่งที่ต้องทำ แล้วกด Enter" maxlength="200"><button id="ck-add" class="secondary" type="button">เพิ่ม</button></div><ul id="ck-open" class="checklist"></ul><div id="ck-done-wrap" hidden><h4 id="ck-done-label">เสร็จแล้ว</h4><ul id="ck-done" class="checklist"></ul></div></section>
+    </div>
+  </section>
+  <script src="app.js"></script>
+</body>
+</html>
